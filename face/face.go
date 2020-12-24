@@ -52,7 +52,7 @@ func New(auth *oauth.Oauth) *Face {
 }
 
 // Recognize ...
-func (f *Face) Recognize(imageFile string) ([]*User, error) {
+func (f *Face) Recognize(imageFile, groupID string) ([]*User, error) {
 	token, err := f.auth.GetToken()
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (f *Face) Recognize(imageFile string) ([]*User, error) {
 		"access_token":  {token},
 		"image":         {b64img},
 		"image_type":    {"BASE64"},
-		"group_id_list": {"family"},
+		"group_id_list": {groupID},
 	}
 	resp, err := http.PostForm(baiduURL, formData)
 	if err != nil {
